@@ -1,0 +1,20 @@
+name: blink-mraa-cpp-joule-example
+version: '1.0' 
+summary: mraa for snapcraft
+description: |
+  Blink Example from MRAA lib for Intel Joule
+
+grade: stable 
+confinement: strict 
+
+apps:
+  blinkapp:
+    command: bin/blink    
+    
+parts:
+  blink:
+    plugin: cmake
+    stage-packages:
+      - libmraa1 
+      - libmraa-dev
+      
