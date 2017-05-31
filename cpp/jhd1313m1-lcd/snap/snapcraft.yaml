@@ -1,0 +1,19 @@
+name: jhd1313m1-upm-cpp-joule-example
+version: '1.0' 
+summary: Upm example for snapcraft
+description: |
+  jhd1313m1 Example from UPM lib for Intel Joule
+
+grade: stable
+confinement: strict
+
+apps:
+  run:
+    command: bin/jhd
+    
+parts:
+  jhd1313m1:
+    plugin: cmake
+    stage-packages:
+      - libupm-dev 
+      - libmraa-dev
