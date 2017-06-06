@@ -8,7 +8,7 @@ grade: stable
 confinement: strict 
 
 apps:
-  blinkapp:
+  run:
     command: bin/blink    
     
 parts:

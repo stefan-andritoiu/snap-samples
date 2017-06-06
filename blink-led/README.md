@@ -27,7 +27,7 @@ $ snap install --devmode blink-mraa-cpp-joule-example_1.0_amd64.snap
 After install, for cpp example, run:
 
 ```sh
-$ sudo snap run blink-mraa-cpp-joule-example.blinkapp
+$ sudo snap run blink-mraa-cpp-joule-example.run
 ```
    For this example, we can observe that Gp103 is blinking.
    
