@@ -1,0 +1,20 @@
+name: jhd1313m1-lcd-upm-python-joule-example
+version: '1.0' 
+summary: A python upm example
+description: |
+  A python example from UPM lib.
+
+grade: stable 
+confinement: strict
+
+apps:
+ run:
+   command: bin/wrapper
+
+parts:
+  local: 
+    plugin: make
+    source: .
+    stage-packages: 
+       - python3-upm
+       - python3
