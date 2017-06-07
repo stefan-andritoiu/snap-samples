@@ -4,6 +4,22 @@ This example is intended to make use of grove Speaker v1.0b sensor, in order to 
 
 # Basic Wiring
 
+1. Connect a jumper wire between;
+	* Pin 42 (pin 2 on the Joule's JI3)
+	* The 5V pin on your Grove shield
+2. Connect a jumper wire between;
+	* Pin 41 (pin 1 on the Joule's JI3)
+	* Any of the GND pins on your Grove shield
+3. Connect a jumper wire between;
+	* Pin 20 (on the Joule's JI2)
+	* The SIG pin on your Grove shield
+
+
+![Grove-speaker diagram](grove-speaker-diagram.jpg?raw=true "Grove-speaker diagram")
+
+
+![Grove-speaker example](grove-speaker-real-example.jpg?raw=true "Grove-speaker example")
+
 
 
 # Build project
