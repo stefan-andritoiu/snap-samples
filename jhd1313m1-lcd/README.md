@@ -32,7 +32,7 @@ $ snap install --devmode jhd1313m1-upm-cpp-joule-example_1.0_amd64.snap
 After install, for cpp example, run:
 
 ```sh
-$ sudo snap run jhd1313m1-upm-cpp-joule-example_1.0_amd64.snap.run
+$ sudo snap run jhd1313m1-upm-cpp-joule-example_1.0_amd64.run
 ```
 
    
@@ -43,3 +43,9 @@ $ sudo snap run jhd1313m1-upm-cpp-joule-example_1.0_amd64.snap.run
    
    For official documentation over snaps/snapcraft please follow this link:
    https://snapcraft.io/docs/
+
+
+### Tested
+|	Operating System	|	Carrier Board	|	mraa Version	|	upm Version	    |
+|:---------------------:|:-----------------:|:-----------------:|:-----------------:|
+|	Ubuntu Core			|  Intel Joule 570x	|	mraa 1.7.0		|	upm 1.3.0		|
