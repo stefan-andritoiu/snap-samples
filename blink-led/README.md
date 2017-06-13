@@ -1,9 +1,9 @@
 # blink-led 
 
-This example is intended to blink the led 103 that is placed on the Intel Joule Board.
+This example is intended to blink the led on the Intel® Joule Expansion Board
 
 # Build project
-After succesfully installed snapcraft, navigate to the desired language folder, and write in terminal:
+After succesfully installing snapcraft, run the following command in the desired language folder:
 ```sh
 $ snapcraft
 ```
@@ -11,7 +11,7 @@ $ snapcraft
 # Install project
 
 This will generate a *.snap file, the next step is to install this .snap on the Intel Joule Board, we will use the cpp project as an example:
-  - using scp, we will copy the .snap file onto the board:
+  - using scp, copy the .snap file onto the board:
 ```sh
 $ scp blink-mraa-cpp-joule-example_1.0_amd64.snap <userName>@<ipAddress>:<JoulePath>
 ```

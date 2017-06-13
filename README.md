@@ -1,6 +1,6 @@
 # ubuntu-core-samples
 
-Samples and projects for platforms running Ubuntu Core
+Samples and projects for platforms running Ubuntu Core on Intel® Joule Expansion Board
 
 Basic environment settings and tools needed for every example:
 

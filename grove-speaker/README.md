@@ -1,6 +1,6 @@
 # grove-speaker  
 
-This example is intended to make use of grove Speaker v1.0b sensor, in order to emit some custom musical notes in conjuction with Intel Joule Board.
+This example is intended to make use of the Grove Speaker sensor and Intel® Joule Expansion Board, in order to emit some custom musical notes.
 
 # Basic Wiring
 
@@ -23,7 +23,7 @@ This example is intended to make use of grove Speaker v1.0b sensor, in order to 
 
 
 # Build project
-After succesfully installed snapcraft, navigate to the desired language folder, and write in terminal:
+After succesfully installing snapcraft, run the following command in the desired language folder:
 ```sh
 $ snapcraft
 ```
@@ -31,7 +31,7 @@ $ snapcraft
 # Install project
 
 This will generate a *.snap file, the next step is to install this .snap on the Intel Joule Board, we will use the cpp project as an example:
-  - using scp, we will copy the .snap file onto the board:
+  - using scp, copy the .snap file onto the board:
 ```sh
 $ scp grove-speaker-cpp-joule-example_1.0_amd64.snap <userName>@<ipAddress>:<JoulePath>
 ```

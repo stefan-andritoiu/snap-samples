@@ -1,6 +1,6 @@
 # jhd1313m1-lcd  
 
-This example is intended to display a message on Grove-LCD, using I2C connection from the Intel Joule Board.
+This example is intended to display a message on the Grove RGB LCD connected to an Intel® Joule Expansion Board.
 
 # Basic Wiring
 
@@ -8,7 +8,7 @@ Please follow this link for detailed physical connection of the Grove-LCD on the
 https://github.com/intel-iot-devkit/joule-code-samples/tree/master/exploring-cpp/lesson_4_i2c/cpp
 
 # Build project
-After succesfully installed snapcraft, navigate to the desired language folder, and write in terminal:
+After succesfully installing snapcraft, run the following command in the desired language folder:
 ```sh
 $ snapcraft
 ```
@@ -16,7 +16,7 @@ $ snapcraft
 # Install project
 
 This will generate a *.snap file, the next step is to install this .snap on the Intel Joule Board, we will use the cpp project as an example:
-  - using scp, we will copy the .snap file onto the board:
+  - using scp, copy the .snap file onto the board:
 ```sh
 $ scp jhd1313m1-upm-cpp-joule-example_1.0_amd64.snap <userName>@<ipAddress>:<JoulePath>
 ```
