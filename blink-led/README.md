@@ -3,9 +3,9 @@
 This example is intended to blink the led on the Intel® Joule Expansion Board
 
 # Build project
-After succesfully installing snapcraft, run the following command in the desired language folder:
+After succesfully installing snapcraft as a snap package, run the following command in the desired language folder:
 ```sh
-$ snapcraft
+$ sudo snap run snapcraft
 ```
 
 # Install project

@@ -8,9 +8,9 @@ Please follow this link for detailed physical connection of the Grove-LCD on the
 https://github.com/intel-iot-devkit/joule-code-samples/tree/master/exploring-cpp/lesson_4_i2c/cpp
 
 # Build project
-After succesfully installing snapcraft, run the following command in the desired language folder:
+After succesfully installing snapcraft as a snap package, run the following command in the desired language folder:
 ```sh
-$ snapcraft
+$ sudo snap run snapcraft
 ```
 
 # Install project
