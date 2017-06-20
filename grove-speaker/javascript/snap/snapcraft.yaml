@@ -1,0 +1,22 @@
+name: grove-speaker-javascript-joule-example
+version: '1.0' 
+summary: Grove speaker javascript upm example for Intel Joule
+description: |
+  Grove speaker javascript example from UPM lib for Intel Joule
+
+grade: stable 
+confinement: strict
+
+apps:
+ run:
+   command: bin/wrapper
+
+parts:
+  move:
+    plugin: dump
+    organize:
+      'wrapper' : bin/
+      '*.js' : bin/
+    stage-packages:
+       - nodejs-dev
+       - node-upm

@@ -24,7 +24,7 @@
 
 "use strict";
 
-const mraa = require('../usr/lib/node_modules/mraa/mraa.node'); //require mraa
+const mraa = require('../usr/lib/node_modules/mraa/mraa.node'); //require mraa relative to the path where Blink-IO.js will be executed
 console.log('MRAA Version: ' + mraa.getVersion()); //write the mraa version to the console
 
 let myLed = new mraa.Gpio(103); //LED hooked up to digital pin 13 (or built in pin on Galileo Gen1 & Gen2)
