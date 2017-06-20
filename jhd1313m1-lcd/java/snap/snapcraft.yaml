@@ -16,6 +16,7 @@ parts:
     plugin: maven
     stage-packages:
        - libupm-java
-  wrapper: 
-    plugin: make
-    source: .
+  move:
+    plugin: dump
+    organize:
+      'wrapper' : bin/
