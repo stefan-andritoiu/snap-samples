@@ -13,8 +13,10 @@ apps:
 
 parts:
   local: 
-    plugin: make
-    source: .
+    plugin: dump
+    organize:
+      'wrapper' : bin/
+      '*.py' : bin/
     stage-packages: 
        - python3-upm
        - python3
