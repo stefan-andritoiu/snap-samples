@@ -22,8 +22,8 @@ $ snap install snapcraft --beta --classic
    [here]: <https://tutorials.ubuntu.com/tutorial/setup-ubuntu-core-intel-joule#0>
    
 Preffered OS:
-	- Ubuntu
-	- Linux Mint
+  - Ubuntu
+  - Linux Mint
 
 Since snapcraft was developed mainly for Ubuntu, other debian distros might need different environment setup to support snapd/snapcraft. Please follow official documentation on this subject: 
 https://snapcraft.io/docs/build-snaps/trusty
