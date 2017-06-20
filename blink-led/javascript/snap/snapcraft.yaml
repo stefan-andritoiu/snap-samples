@@ -1,0 +1,22 @@
+name: blink-mraa-javascript-joule-example
+version: '1.0' 
+summary: A mraa javascript example
+description: |
+  A javascript example from MRAA lib.
+
+grade: stable 
+confinement: strict
+
+apps:
+ run:
+   command: bin/wrapper
+
+parts:
+  move:
+    plugin: dump
+    organize:
+      'wrapper' : bin/
+      '*.js' : bin/
+    stage-packages:
+       - nodejs-dev
+       - node-mraa
