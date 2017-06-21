@@ -1,0 +1,20 @@
+name: mraa-utils
+version: '1.0' 
+summary: mraa utilities snap
+description: |
+  MRAA utilities snap
+
+apps:
+  mraa-gpio:
+    command: usr/bin/mraa-gpio
+  mraa-i2c:
+    command: usr/bin/mraa-i2c
+
+grade: stable 
+confinement: strict
+
+parts:
+  local:
+    plugin: nil
+    stage-packages: 
+      - mraa-tools
