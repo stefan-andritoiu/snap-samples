@@ -1,0 +1,19 @@
+name: grove-ultrasonic-cpp-joule-example
+version: '1.0' 
+summary: Grove ultrasonic upm example for snapcraft
+description: |
+  Grove ultrasonic example from UPM lib for Intel Joule
+
+grade: stable
+confinement: strict
+
+apps:
+  run:
+    command: bin/ultrasonic
+    
+parts:
+  grovespeaker:
+    plugin: cmake
+    stage-packages:
+      - libupm-dev 
+      - libmraa-dev
