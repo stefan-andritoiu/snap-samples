@@ -1,0 +1,22 @@
+name: grove-linefinder-upm-java-joule-example
+version: '1.0' 
+summary: A java upm with maven example
+description: |
+  A java example from upm lib, builded with maven, using grove-linefinder sensor.
+
+grade: stable 
+confinement: strict
+
+apps:
+ run:
+   command: bin/wrapper
+
+parts:
+  local:
+    plugin: maven
+    stage-packages:
+       - libupm-java
+  move:
+    plugin: dump
+    organize:
+      'wrapper' : bin/
