@@ -1,0 +1,19 @@
+name: grove-linefinder-cpp-joule-example
+version: '1.0' 
+summary: Grove linefinder upm example for snapcraft
+description: |
+  Grove linefinder example from UPM lib for Intel Joule
+
+grade: stable
+confinement: strict
+
+apps:
+  run:
+    command: bin/linefinder
+    
+parts:
+  grovespeaker:
+    plugin: cmake
+    stage-packages:
+      - libupm-dev 
+      - libmraa-dev
