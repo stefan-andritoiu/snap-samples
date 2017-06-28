@@ -5,7 +5,7 @@
   <artifactId>grove-linefinder</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-  <name>groves-peaker</name>
+  <name>groves-linefinder</name>
   <url>https://github.com/intel-iot-devkit/upm</url>
   <dependencies>
     <dependency>

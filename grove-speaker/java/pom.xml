@@ -5,7 +5,7 @@
   <artifactId>grove-speaker</artifactId>
   <packaging>jar</packaging>
   <version>1.0</version>
-  <name>groves-peaker</name>
+  <name>groves-speaker</name>
   <url>https://github.com/intel-iot-devkit/upm</url>
   <dependencies>
     <dependency>
