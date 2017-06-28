@@ -26,7 +26,7 @@ import time, sys, signal, atexit
 from upm import pyupm_grovelinefinder as upmGrovelinefinder
 
 def main():
-    # Instantiate a Grove line finder sensor on digital pin D2
+    # Instantiate a Grove line finder sensor on pin 20
     myLineFinder = upmGrovelinefinder.GroveLineFinder(20)
 
     ## Exit handlers ##
