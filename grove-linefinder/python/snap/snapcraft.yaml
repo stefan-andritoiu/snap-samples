@@ -1,0 +1,22 @@
+name: grove-linefinder-upm-python-joule-example
+version: '1.0' 
+summary: A python upm example
+description: |
+  A python example from UPM lib with grove-linefinder sensor.
+
+grade: stable 
+confinement: strict
+
+apps:
+ run:
+   command: bin/wrapper
+
+parts:
+  local: 
+    plugin: dump
+    organize:
+      'wrapper' : bin/
+      '*.py' : bin/
+    stage-packages: 
+       - python3-upm
+       - python3
