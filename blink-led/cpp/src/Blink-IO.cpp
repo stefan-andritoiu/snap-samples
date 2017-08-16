@@ -27,13 +27,44 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
 #include "mraa.hpp"
-#define DEFAULT_IOPIN 103
 
 static int iopin;
 int running = 0;
 
+
+
+bool set_board_pin() {
+    mraa_platform_t platform = mraa_get_platform_type();
+    switch (platform) {
+      case MRAA_INTEL_JOULE_EXPANSION: 
+        {
+        iopin = 103;
+        printf("Detected JOULE Board, flashing %d pin \n", iopin);
+        return true;
+        }
+      case MRAA_INTEL_DE3815:       //DE3815 + Arduino 1to1
+        {
+        iopin = 13+512;
+        mraa_result_t res = mraa_add_subplatform(MRAA_GENERIC_FIRMATA, "/dev/ttyACM0");
+        if (res != MRAA_SUCCESS){
+        printf("ERROR: Base platform %d on port /dev/ttyACM0 for reason %d \n", platform, res);
+            }   
+        printf("Detected DE3815 Board, flashing %d pin \n", iopin);
+        return true;
+        }
+      case MRAA_INTEL_MINNOWBOARD_MAX:
+        {
+        iopin = 21;
+        printf("Detected MINNOWBOARD MAX Board, flashing %d pin \n", iopin);
+        //There is no onboard pin on MINNOBOARD max, so it is recommended to plug an led into pin 21
+        return true;
+        }
+      default:
+        // suggest the user to type a port from the keyboard
+        return false;
+    }
+}
 void
 sig_handler(int signo)
 {
@@ -45,15 +76,19 @@ sig_handler(int signo)
 int
 main(int argc, char** argv)
 {
-    if (argc < 2) {
-        printf("Provide an int arg if you want to flash on something other than %d\n", DEFAULT_IOPIN);
-        iopin = DEFAULT_IOPIN;
-    } else {
+    bool board_found;
+    board_found = set_board_pin();
+    if (!board_found)
+        if (argc < 2) {
+             printf("Current board not detected, please provide an int arg for the pin you want to flash\n");
+             return 0;
+            } 
+        else {
         iopin = strtol(argv[1], NULL, 10);
-    }
+        }
 
     signal(SIGINT, sig_handler);
-
+        
     //! [Interesting]
     mraa::Gpio* gpio = new mraa::Gpio(iopin);
     if (gpio == NULL) {
