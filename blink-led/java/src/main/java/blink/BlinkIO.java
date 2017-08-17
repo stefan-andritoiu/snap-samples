@@ -30,6 +30,7 @@ import mraa.Dir;
 import mraa.Gpio;
 import mraa.Result;
 import mraa.mraa;
+import mraa.Platform;
 
 public class BlinkIO {
     static {
@@ -43,15 +44,34 @@ public class BlinkIO {
         }
     }
 
-    final static int DEFAULT_IOPIN = 103;
-
     public static void main(String argv[]) throws InterruptedException {
-        int iopin = DEFAULT_IOPIN;
-        if (argv.length == 0) {
-            System.out.println("Flashing pin: " + DEFAULT_IOPIN);
-        } else {
-            iopin = Integer.valueOf(argv[0]);
-        }
+        int iopin;
+        Platform platform = mraa.getPlatformType();
+        if (platform == Platform.INTEL_JOULE_EXPANSION) {  
+                     iopin = 103;
+                     System.out.println("Detected JOULE Board, flashing " + iopin + " pin \n ");
+                    }
+        else if (platform == Platform.INTEL_DE3815){              
+                     iopin = 13+512;
+                     Result sublplatformResult =  mraa.addSubplatform(Platform.GENERIC_FIRMATA, "/dev/ttyACM0");
+                     if (sublplatformResult != Result.SUCCESS)
+                        {
+                        System.out.println("ERROR: Base platform INTEL_DE3815 on port /dev/ttyACM0 for reason" + sublplatformResult);                        
+                        }
+                     System.out.println("Detected DE3815 Board, flashing " + iopin + " pin \n ");
+                    }
+            else if (platform == Platform.INTEL_MINNOWBOARD_MAX){             
+                     iopin = 21;
+                     System.out.println("Detected MINNOWBOARD MAX Board, flashing " + iopin + " pin \n ");
+                    }
+                 else if (argv.length == 0) {
+                        iopin = 0;
+                        System.out.println("Current board not detected, please provide an int arg for the pin you want to flash\n");
+                        System.exit(1);
+                    } 
+                      else {
+                      iopin = Integer.valueOf(argv[0]);
+                      }
 
         //! [Interesting]
         Gpio gpio = new Gpio(iopin);

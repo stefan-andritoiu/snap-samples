@@ -15,7 +15,8 @@ parts:
   local:
     plugin: maven
     stage-packages:
-       - libmraa-java  
+       - libmraa-java
+       - mraa-imraa
   move:
     plugin: dump
     organize:
