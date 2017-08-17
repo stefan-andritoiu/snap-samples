@@ -17,3 +17,4 @@ parts:
     stage-packages:
       - libmraa1 
       - libmraa-dev
+      - mraa-imraa
