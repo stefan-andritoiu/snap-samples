@@ -21,10 +21,36 @@
 
 ##requires installation of mraa: https://github.com/intel-iot-devkit/mraa#installing-on-ubuntu 
 
-import mraa
 import time
+import argparse
+import mraa
 
-x = mraa.Gpio(103) #onboard LED
+parser = argparse.ArgumentParser()
+parser.add_argument("--pin_number", help="add user specific pin number for flashing",
+                    type=int)
+args = parser.parse_args()
+
+platform_name = mraa.getPlatformName()
+iopin = 0
+if platform_name == "Intel DE3815":
+    iopin = 512 + 13
+    error_platform = mraa.addSubplatform(mraa.GENERIC_FIRMATA, "/dev/ttyACM0")
+    if  error_platform!= mraa.SUCCESS:
+        print "ERROR: Base platform INTEL_DE3815 on port /dev/ttyACM0 for reason %s" % error_platform
+    print "Detected DE3815 Board, flashing %s pin" % iopin
+elif platform_name == "INTEL JOULE EXPANSION":
+    iopin = 103
+    print "Detected Joule Board, flashing %s pin" % iopin
+elif platform_name == "MinnowBoard MAX":
+    iopin = 21
+    print "Detected MinnowBoard MAX Board, flashing %s pin" % iopin 
+elif args.pin_number:
+    iopin = args.pin_number
+else:
+    print "Current board not detected, please provide an int arg for the pin you want to flash"    
+    exit()
+        
+x = mraa.Gpio(iopin) 
 x.dir(mraa.DIR_OUT)
 
 while True:

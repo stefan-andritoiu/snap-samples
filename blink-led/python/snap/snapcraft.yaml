@@ -9,14 +9,14 @@ confinement: strict
 
 apps:
  run:
-   command: bin/wrapper
+   command: blink.py
 
 parts:
   local: 
-    plugin: dump
-    organize:
-      'wrapper' : bin/
-      '*.py' : bin/
+    plugin: python
     stage-packages: 
-       - python3-mraa
-       - python3
+       - python-mraa
+       - mraa-imraa
+  movefiles:
+    plugin: dump
+    source: .
