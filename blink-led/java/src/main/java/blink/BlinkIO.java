@@ -45,7 +45,7 @@ public class BlinkIO {
     }
 
     public static void main(String argv[]) throws InterruptedException {
-        int iopin;
+        int iopin=0;
         Platform platform = mraa.getPlatformType();
         if (platform == Platform.INTEL_JOULE_EXPANSION) {  
                      iopin = 103;
@@ -60,18 +60,24 @@ public class BlinkIO {
                         }
                      System.out.println("Detected DE3815 Board, flashing " + iopin + " pin \n ");
                     }
-            else if (platform == Platform.INTEL_MINNOWBOARD_MAX){             
+        else if (platform == Platform.INTEL_MINNOWBOARD_MAX){             
                      iopin = 21;
                      System.out.println("Detected MINNOWBOARD MAX Board, flashing " + iopin + " pin \n ");
                     }
-                 else if (argv.length == 0) {
-                        iopin = 0;
-                        System.out.println("Current board not detected, please provide an int arg for the pin you want to flash\n");
-                        System.exit(1);
+        else if (argv.length == 0) {
+                     System.out.println("Current board not detected, please provide an int arg for the pin you want to flash\n");
+                     System.exit(1);
                     } 
-                      else {
-                      iopin = Integer.valueOf(argv[0]);
-                      }
+            else {   
+                     try {    
+                        iopin = Integer.valueOf(argv[0]);
+                        }
+                     catch (NumberFormatException e)  {
+                        System.out.println("Inserted pin is not a integer type");  
+                        System.exit(1);  
+                        }
+                     System.out.println("Current board not detected, flashing " + iopin + " pin \n ");
+                 }
 
         //! [Interesting]
         Gpio gpio = new Gpio(iopin);

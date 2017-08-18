@@ -9,15 +9,11 @@ confinement: strict
 
 apps:
  run:
-   command: bin/wrapper
+   command: java -classpath $SNAP/jar/blink-led-1.0.jar:$SNAP/usr/share/java/mraa.jar BlinkIO
 
 parts:
   local:
     plugin: maven
     stage-packages:
        - libmraa-java
-       - mraa-imraa
-  move:
-    plugin: dump
-    organize:
-      'wrapper' : bin/
+       - mraa-imraa  
