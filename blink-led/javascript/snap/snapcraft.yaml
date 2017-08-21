@@ -19,3 +19,4 @@ parts:
        - nodejs-dev
        - node-mraa
        - node-commander
+       - mraa-imraa
