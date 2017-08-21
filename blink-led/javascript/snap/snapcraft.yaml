@@ -9,14 +9,13 @@ confinement: strict
 
 apps:
  run:
-   command: bin/wrapper
+   command: nodejs $SNAP/Blink-IO.js
 
 parts:
   move:
     plugin: dump
-    organize:
-      'wrapper' : bin/
-      '*.js' : bin/
+    source: .
     stage-packages:
        - nodejs-dev
        - node-mraa
+       - node-commander

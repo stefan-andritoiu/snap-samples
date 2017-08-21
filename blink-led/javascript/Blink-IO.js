@@ -24,10 +24,57 @@
 
 "use strict";
 
-const mraa = require('../usr/lib/node_modules/mraa/mraa.node'); //require mraa relative to the path where Blink-IO.js will be executed
+var program = require('./usr/lib/nodejs/commander');
+program
+.version('1.0')
+.option('-p, --pin_number <n>', 'Insert pin number')
+.parse(process.argv);
+
+const mraa = require('./usr/lib/node_modules/mraa/mraa.node'); //require mraa relative to the path where Blink-IO.js will be executed
 console.log('MRAA Version: ' + mraa.getVersion()); //write the mraa version to the console
 
-let myLed = new mraa.Gpio(103); //LED hooked up to digital pin 13 (or built in pin on Galileo Gen1 & Gen2)
+
+
+var iopin;
+switch (mraa.getPlatformType()) {
+      case mraa.INTEL_JOULE_EXPANSION:
+        iopin = 103;
+        console.log("Detected JOULE Board, flashing %d pin \n", iopin);
+        break;
+      case mraa.INTEL_DE3815 :       //DE3815 + Arduino 1to1
+        iopin = 13+512;
+        var res = mraa.addSubplatform(mraa.GENERIC_FIRMATA, "/dev/ttyACM0");
+        if (res != mraa.SUCCESS){
+        console.log("ERROR: Base platform DE3815 on port /dev/ttyACM0 for reason %d \n", res);
+            }
+        console.log("Detected DE3815 Board, flashing %d pin \n", iopin);
+        break;
+      case mraa.INTEL_MINNOWBOARD_MAX:
+        iopin = 21;
+        console.log("Detected MINNOWBOARD MAX Board, flashing %d pin \n", iopin);
+        //There is no onboard pin on MINNOBOARD max, so it is recommended to plug an led into pin 21
+        break;
+      default:
+        if (program.pin_number)
+            if (parseInt(program.pin_number))
+                iopin = parseInt(program.pin_number);
+            else 
+                {
+                console.log("Error, inserted arguments is not of type int");
+                process.exit(1);
+                }
+        else
+            { 
+            console.log("Board not detected, please insert the pin that you want to flash");
+            process.exit(1);
+            }        
+        console.log("Board not detected, flashing %d pin \n", iopin);
+        break;
+    }
+
+
+
+let myLed = new mraa.Gpio(iopin);
 myLed.dir(mraa.DIR_OUT); //set the gpio direction to output
 let ledState = true; //Boolean to hold the state of Led
 
