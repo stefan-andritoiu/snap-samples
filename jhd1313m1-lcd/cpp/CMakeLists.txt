@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.9)
 project (UPM)
 
-file(GLOB SOURCES "src/*.cxx")
+file(GLOB SOURCES "src/*.cpp")
 
 find_package (PkgConfig REQUIRED)
 

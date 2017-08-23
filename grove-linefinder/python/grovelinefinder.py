@@ -1,6 +1,6 @@
-#!/usr/bin/python
-# Author: Zion Orent <zorent@ics.com>
-# Copyright (c) 2015 Intel Corporation.
+#!/usr/bin/env python
+# Author: Flavian Manea <flavian.manea@rinftech.com>
+# Copyright (c) 2017 Intel Corporation.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the

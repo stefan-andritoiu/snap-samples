@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# Author: Flavian Manea <flavian.manea@rinftech.com>
+# Copyright (c) 2017 Intel Corporation.
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -18,8 +20,6 @@
 # LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-##requires installation of mraa: https://github.com/intel-iot-devkit/mraa#installing-on-ubuntu 
 
 import time
 import argparse

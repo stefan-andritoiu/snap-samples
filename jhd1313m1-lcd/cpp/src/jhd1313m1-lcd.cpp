@@ -22,45 +22,64 @@
 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <unistd.h>
-#include <iostream>
 #include <signal.h>
-#include "grovelinefinder.hpp"
-
-using namespace std;
+#include "jhd1313m1.hpp"
+#include <unistd.h>
 
 int shouldRun = true;
 
 void sig_handler(int signo)
 {
-  if (signo == SIGINT)
-    shouldRun = false;
+    if (signo == SIGINT)
+        shouldRun = false;
 }
 
-
-int main ()
+int
+main(int argc, char **argv)
 {
-  signal(SIGINT, sig_handler);
-
-//! [Interesting]
-  // Instantiate a Grove Line Finder sensor on pin 20
-  upm::GroveLineFinder* finder = new upm::GroveLineFinder(20);
-  
-  // check every second for the presence of white detection
-  while (shouldRun)
+    signal(SIGINT, sig_handler);
+    int cursor1, cursor2;
+    //! [Interesting]
+    // 0x62 RGB_ADDRESS, 0x3E LCD_ADDRESS
+    if (argc != 3)
     {
-      bool val = finder->whiteDetected();
-      if (val)
-        cout << "White detected." << endl;
-      else
-        cout << "Black detected." << endl;
-
-      sleep(1);
+        printf ("Please, pass two arguments denoting setCursor parameters \n");
+        return 0;
     }
-//! [Interesting]
+    else
+    {
+        cursor1 = atoi(argv[0]);
+        cursor2 = atoi(argv[1]);
 
-  cout << "Exiting..." << endl;
+    }
 
-  delete finder;
-  return 0;
+    upm::Jhd1313m1 lcd(0, 0x3E, 0x62);
+
+    int ndx = 0;
+    uint8_t rgb[7][3] = {
+        {0xd1, 0x00, 0x00},
+        {0xff, 0x66, 0x22},
+        {0xff, 0xda, 0x21},
+        {0x33, 0xdd, 0x00},
+        {0x11, 0x33, 0xcc},
+        {0x22, 0x00, 0x66},
+        {0x33, 0x00, 0x44}};
+    while (shouldRun)
+    {
+        // Alternate rows on the LCD
+        lcd.setCursor(cursor1,cursor2);
+        // Change the color
+        uint8_t r = rgb[ndx%7][0];
+        uint8_t g = rgb[ndx%7][1];
+        uint8_t b = rgb[ndx%7][2];
+        lcd.setColor(r, g, b);
+        lcd.write("Hello World");
+        // Echo via printf
+        printf("Hello World %d rgb: 0x%02x%02x%02x\n", ndx++, r, g, b);
+
+        sleep(1);
+    }
+
+    //! [Interesting]
+    return 0;
 }
