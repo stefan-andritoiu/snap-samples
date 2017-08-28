@@ -1,6 +1,6 @@
-# ubuntu-core-samples
+# snapcraft-samples
 
-Samples and projects for platforms running Ubuntu Core on Intel® Joule Expansion Board
+Snapcraft samples using the Intel IoT Developer Kit, Intel Developer boards or Intel IoT Gateway, sensors, and APIs.
 
 Basic environment settings and tools needed for every example:
 
