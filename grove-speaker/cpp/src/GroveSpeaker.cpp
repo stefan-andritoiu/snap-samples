@@ -29,19 +29,55 @@
 
 using namespace std;
 
-#define DEFAULT_IOPIN 20
 static int iopin;
+
+bool set_board_pin() {
+  mraa_platform_t platform = mraa_get_platform_type();
+  switch (platform) {
+    case MRAA_INTEL_JOULE_EXPANSION: 
+      {
+      iopin = 20;
+      printf("Detected JOULE Board, instantiating Grove Speaker on %d pin \n",  iopin);
+      return true;
+      }
+    case MRAA_INTEL_DE3815:       //DE3815 + Arduino 1to1
+      {
+      iopin = 14+512; //Pin A0 with groveshield
+      mraa_result_t res = mraa_add_subplatform(MRAA_GENERIC_FIRMATA, "/dev/ttyACM0");
+      if (res != MRAA_SUCCESS){
+      printf("ERROR: Base platform %d on port /dev/ttyACM0 for reason %d \n", platform, res);
+          }   
+      printf("Detected DE3815 Board, instantiating Grove Speaker on %d pin \n",  iopin);
+      return true;
+      }
+    case MRAA_INTEL_MINNOWBOARD_MAX:
+      {
+      iopin = 21;
+      printf("Detected MINNOWBOARD MAX Board, instantiating Grove Speaker on %d pin \n",  iopin);
+      return true;
+      }
+    default:
+      // suggest the user to type a port from the keyboard
+      return false;
+  }
+}
+
 
 int main(int argc, char** argv)
 {
-	if (argc < 2) {
-        printf("Provide an int arg if you want to use other pin than %d\n", DEFAULT_IOPIN);
-        iopin = DEFAULT_IOPIN;
-    } else {
-        iopin = strtol(argv[1], NULL, 10);
-    }
+  
+  bool board_found;
+  board_found = set_board_pin();
+  if (!board_found)
+      if (argc < 2) {
+           printf("Current board not detected, please provide an int arg for the pin you want to instantiate Grove Speaker\n");
+           return 0;
+          } 
+      else {
+      iopin = strtol(argv[1], NULL, 10);
+      }
 //! [Interesting]
-  // Instantiate a Grove Speaker on digital pin 20
+  // Instantiate a Grove Speaker sensor based on detected platform
   upm::GroveSpeaker* speaker = new upm::GroveSpeaker(iopin);
 
   // Play all 7 of the lowest notes

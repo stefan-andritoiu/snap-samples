@@ -30,6 +30,7 @@
 using namespace std;
 
 int shouldRun = true;
+static int  iopin;
 
 void sig_handler(int signo)
 {
@@ -38,13 +39,55 @@ void sig_handler(int signo)
 }
 
 
-int main ()
+bool set_board_pin() {
+  mraa_platform_t platform = mraa_get_platform_type();
+  switch (platform) {
+    case MRAA_INTEL_JOULE_EXPANSION: 
+      {
+      iopin = 20;
+      printf("Detected JOULE Board, instantiating Grove Line Finder on %d pin \n",  iopin);
+      return true;
+      }
+    case MRAA_INTEL_DE3815:       //DE3815 + Arduino 1to1
+      {
+      iopin = 14+512; //Pin A0 with groveshield
+      mraa_result_t res = mraa_add_subplatform(MRAA_GENERIC_FIRMATA, "/dev/ttyACM0");
+      if (res != MRAA_SUCCESS){
+      printf("ERROR: Base platform %d on port /dev/ttyACM0 for reason %d \n", platform, res);
+          }   
+      printf("Detected DE3815 Board, instantiating Grove Line Finder on %d pin \n",  iopin);
+      return true;
+      }
+    case MRAA_INTEL_MINNOWBOARD_MAX:
+      {
+      iopin = 21;
+      printf("Detected MINNOWBOARD MAX Board, instantiating Grove Line Finder on %d pin \n",  iopin);
+      return true;
+      }
+    default:
+      // suggest the user to type a port from the keyboard
+      return false;
+  }
+}
+
+
+int
+main(int argc, char** argv)
 {
   signal(SIGINT, sig_handler);
-
+  bool board_found;
+  board_found = set_board_pin();
+  if (!board_found)
+      if (argc < 2) {
+           printf("Current board not detected, please provide an int arg for the pin you want to instantiate Grove Line Finder\n");
+           return 0;
+          } 
+      else {
+      iopin = strtol(argv[1], NULL, 10);
+      }
 //! [Interesting]
-  // Instantiate a Grove Line Finder sensor on pin 20
-  upm::GroveLineFinder* finder = new upm::GroveLineFinder(20);
+  // Instantiate a Grove Line Finder sensor based on detected platform
+  upm::GroveLineFinder* finder = new upm::GroveLineFinder(iopin);
   
   // check every second for the presence of white detection
   while (shouldRun)

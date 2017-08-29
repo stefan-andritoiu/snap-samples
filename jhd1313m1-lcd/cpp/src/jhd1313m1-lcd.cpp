@@ -23,8 +23,10 @@
 */
 
 #include <signal.h>
+#include <string>
+
 #include "jhd1313m1.hpp"
-#include <unistd.h>
+#include "upm_utilities.h"
 
 int shouldRun = true;
 
@@ -38,22 +40,44 @@ int
 main(int argc, char **argv)
 {
     signal(SIGINT, sig_handler);
-    int cursor1, cursor2;
+    int screenBus;
+    mraa_platform_t platform = mraa_get_platform_type();
+    switch (platform) {
+        case MRAA_INTEL_JOULE_EXPANSION: 
+            {
+            screenBus = 0;
+            printf("Detected JOULE Board, instantiating jhd1313m on %d bus \n",  screenBus);
+            break;
+            }
+        case MRAA_INTEL_DE3815:       //DE3815 + Arduino 1to1
+            {
+            screenBus = 512; //Pin I2c with groveshield
+            mraa_result_t res = mraa_add_subplatform(MRAA_GENERIC_FIRMATA, "/dev/ttyACM0");
+            if (res != MRAA_SUCCESS){
+            printf("ERROR: Base platform %d on port /dev/ttyACM0 for reason %d \n", platform, res);
+                }   
+            printf("Detected DE3815 Board, instantiating jhd1313m on %d bus \n",  screenBus);
+            break;
+            }
+        case MRAA_INTEL_MINNOWBOARD_MAX:
+            {
+            screenBus = 0;
+            printf("Detected MINNOWBOARD MAX Board, instantiating jhd1313m on %d bus \n",  screenBus);
+            //There is no onboard pin on MINNOBOARD max, so it is recommended to plug an led into pin 21
+            break;
+            }
+        default:
+            if (argc < 2) {
+            printf("Current board not detected, please provide an int arg for the bus you want to instantiate jhd1313m \n");
+            return 0;
+           } 
+            else {
+            screenBus = strtol(argv[1], NULL, 10);
+        }
+    }
     //! [Interesting]
     // 0x62 RGB_ADDRESS, 0x3E LCD_ADDRESS
-    if (argc != 3)
-    {
-        printf ("Please, pass two arguments denoting setCursor parameters \n");
-        return 0;
-    }
-    else
-    {
-        cursor1 = atoi(argv[0]);
-        cursor2 = atoi(argv[1]);
-
-    }
-
-    upm::Jhd1313m1 lcd(0, 0x3E, 0x62);
+    upm::Jhd1313m1 lcd(screenBus, 0x3E, 0x62);
 
     int ndx = 0;
     uint8_t rgb[7][3] = {
@@ -67,17 +91,16 @@ main(int argc, char **argv)
     while (shouldRun)
     {
         // Alternate rows on the LCD
-        lcd.setCursor(cursor1,cursor2);
+        lcd.setCursor(ndx%2,0);
         // Change the color
         uint8_t r = rgb[ndx%7][0];
         uint8_t g = rgb[ndx%7][1];
         uint8_t b = rgb[ndx%7][2];
         lcd.setColor(r, g, b);
-        lcd.write("Hello World");
+        lcd.write("Hello World " + std::to_string(ndx));
         // Echo via printf
         printf("Hello World %d rgb: 0x%02x%02x%02x\n", ndx++, r, g, b);
-
-        sleep(1);
+        upm_delay(1);
     }
 
     //! [Interesting]
