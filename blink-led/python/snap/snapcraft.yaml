@@ -9,13 +9,14 @@ confinement: strict
 
 apps:
  run:
-   command: blink.py
+   command: python $SNAP/blink.py
 
 parts:
   local: 
-    plugin: python
+    plugin: nil
     stage-packages: 
        - python-mraa
+       - python
        - mraa-imraa
   movefiles:
     plugin: dump

@@ -9,14 +9,15 @@ confinement: strict
 
 apps:
  run:
-   command: bin/wrapper
+   command: python $SNAP/grovespeaker.py
 
 parts:
   local: 
-    plugin: dump
-    organize:
-      'wrapper' : bin/
-      '*.py' : bin/
+    plugin: nil
     stage-packages: 
-       - python3-upm
-       - python3
+       - python-upm
+       - python
+       - mraa-imraa
+  movefiles:
+    plugin: dump
+    source: .
