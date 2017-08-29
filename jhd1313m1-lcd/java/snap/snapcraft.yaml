@@ -9,14 +9,11 @@ confinement: strict
 
 apps:
  run:
-   command: bin/wrapper
+   command: java -classpath $SNAP/jar/jhd1313m1-lcd-1.0.jar:$SNAP/usr/share/java/upm_jhd1313m1.jar Jhd1313m1_lcdSample
 
 parts:
   local:
     plugin: maven
     stage-packages:
        - libupm-java
-  move:
-    plugin: dump
-    organize:
-      'wrapper' : bin/
+       - mraa-imraa
