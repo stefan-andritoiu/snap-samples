@@ -23,7 +23,7 @@
 */
 
 //Load Grove Speaker module with relative path from grovespeaker.js
-var groveSpeaker = require('../usr/lib/node_modules/jsupm_grovespeaker/jsupm_grovespeaker.node');
+var groveSpeaker = require('./usr/lib/node_modules/jsupm_grovespeaker/jsupm_grovespeaker.node');
 // Instantiate a Grove Speaker on digital pin 20
 var mySpeaker = new groveSpeaker.GroveSpeaker(20);
 

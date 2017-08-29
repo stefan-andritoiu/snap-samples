@@ -22,7 +22,7 @@
 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-var lineFinderSensor = require('../usr/lib/node_modules/jsupm_grovelinefinder/jsupm_grovelinefinder.node');
+var lineFinderSensor = require('./usr/lib/node_modules/jsupm_grovelinefinder/jsupm_grovelinefinder.node');
 
 // Instantiate a Grove line finder sensor on pin 20
 var myLineFinderSensor = new lineFinderSensor.GroveLineFinder(20);

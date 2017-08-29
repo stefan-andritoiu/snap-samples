@@ -9,14 +9,14 @@ confinement: strict
 
 apps:
  run:
-   command: bin/wrapper
+   command: nodejs $SNAP/grovelinefinder.js
 
 parts:
   move:
     plugin: dump
-    organize:
-      'wrapper' : bin/
-      '*.js' : bin/
+    source: .
     stage-packages:
        - nodejs-dev
        - node-upm
+       - node-commander
+       - mraa-imraa
