@@ -9,11 +9,12 @@ confinement: strict
 
 apps:
  run:
-   command: java -classpath $SNAP/jar/jhd1313m1-lcd-1.0.jar:$SNAP/usr/share/java/upm_jhd1313m1.jar Jhd1313m1_lcdSample
+   command: java -classpath $SNAP/jar/jhd1313m1-lcd-1.0.jar:$SNAP/usr/share/java/upm_jhd1313m1.jar:$SNAP/usr/share/java/mraa.jar Jhd1313m1_lcdSample
 
 parts:
   local:
     plugin: maven
     stage-packages:
        - libupm-java
+       - libmraa-java
        - mraa-imraa

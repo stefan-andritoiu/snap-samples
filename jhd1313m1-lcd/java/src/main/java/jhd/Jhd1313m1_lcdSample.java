@@ -22,12 +22,49 @@
 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+import mraa.Result;
+import mraa.mraa;
+import mraa.Platform;
 public class Jhd1313m1_lcdSample{
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String argv[]) throws InterruptedException {
+        
+        int screenBus=0;
+        Platform platform = mraa.getPlatformType();
+        if (platform == Platform.INTEL_JOULE_EXPANSION) {  
+                     screenBus = 0;
+                     System.out.println("Detected JOULE Board, instantiating jhd1313m1 on " + screenBus + " screen bus \n ");
+                    }
+        else if (platform == Platform.INTEL_DE3815){              
+                     screenBus = 512;
+                     Result sublplatformResult =  mraa.addSubplatform(Platform.GENERIC_FIRMATA, "/dev/ttyACM0");
+                     if (sublplatformResult != Result.SUCCESS)
+                        {
+                        System.out.println("ERROR: Base platform INTEL_DE3815 on port /dev/ttyACM0 for reason" + sublplatformResult);                        
+                        }
+                     System.out.println("Detected DE3815 Board, instantiating jhd1313m1 on " + screenBus + " screen bus \n ");
+                    }
+        else if (platform == Platform.INTEL_MINNOWBOARD_MAX){             
+                     screenBus = 0;
+                     System.out.println("Detected MINNOWBOARD MAX Board, instantiating jhd1313m1 on " + screenBus + " screen bus \n ");
+                    }
+        else if (argv.length == 0) {
+                     System.out.println("Current board not detected, please provide an int arg for the screen bus you want to instantiate jhd1313m1 \n");
+                     System.exit(1);
+                    } 
+            else {   
+                     try {    
+                        screenBus = Integer.valueOf(argv[0]);
+                        }
+                     catch (NumberFormatException e)  {
+                        System.out.println("Inserted screen bus is not a integer type");  
+                        System.exit(1);  
+                        }
+                     System.out.println("Current board not detected, instantiating jhd1313m1 on " + screenBus + " screen bus \n ");
+                 }
         //! [Interesting]
         upm_jhd1313m1.Jhd1313m1 lcd =
-            new upm_jhd1313m1.Jhd1313m1(1, 0x3E, 0x62);
+            new upm_jhd1313m1.Jhd1313m1(screenBus, 0x3E, 0x62);
 
         lcd.setCursor(0,0);
         lcd.write("Hello World");

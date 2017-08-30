@@ -22,12 +22,51 @@
 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+import mraa.Result;
+import mraa.mraa;
+import mraa.Platform;
+
 public class GroveSpeakerSample {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String argv[]) throws InterruptedException {
+
+        int iopin=0;
+        Platform platform = mraa.getPlatformType();
+        if (platform == Platform.INTEL_JOULE_EXPANSION) {  
+                     iopin = 20;
+                     System.out.println("Detected JOULE Board, instantiating Grove Speaker on " + iopin + " pin \n ");
+                    }
+        else if (platform == Platform.INTEL_DE3815){              
+                     iopin = 14+512;
+                     Result sublplatformResult =  mraa.addSubplatform(Platform.GENERIC_FIRMATA, "/dev/ttyACM0");
+                     if (sublplatformResult != Result.SUCCESS)
+                        {
+                        System.out.println("ERROR: Base platform INTEL_DE3815 on port /dev/ttyACM0 for reason" + sublplatformResult);                        
+                        }
+                     System.out.println("Detected DE3815 Board, instantiating Grove Speaker on " + iopin + " pin \n ");
+                    }
+        else if (platform == Platform.INTEL_MINNOWBOARD_MAX){             
+                     iopin = 21;
+                     System.out.println("Detected MINNOWBOARD MAX Board, instantiating Grove Speaker on " + iopin + " pin \n ");
+                    }
+        else if (argv.length == 0) {
+                     System.out.println("Current board not detected, please provide an int arg for the pin you want to flash\n");
+                     System.exit(1);
+                    } 
+            else {   
+                     try {    
+                        iopin = Integer.valueOf(argv[0]);
+                        }
+                     catch (NumberFormatException e)  {
+                        System.out.println("Inserted pin is not a integer type");  
+                        System.exit(1);  
+                        }
+                     System.out.println("Current board not detected, instantiating Grove Speaker on " + iopin + " pin \n ");
+                 }
+        
         // ! [Interesting]
-        // Instantiate a Grove Speaker on digital pin 20 on Intel Joule
-        upm_grovespeaker.GroveSpeaker speaker = new upm_grovespeaker.GroveSpeaker(20);
+        // Instantiate a Grove Speaker on pin based on detected platform
+        upm_grovespeaker.GroveSpeaker speaker = new upm_grovespeaker.GroveSpeaker(iopin);
 
         // Play all 7 of the lowest notes
         speaker.playAll();

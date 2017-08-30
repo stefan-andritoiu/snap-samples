@@ -60,7 +60,7 @@ switch (mraa.getPlatformType()) {
                 }
         else
             { 
-            console.log("Board not detected, please provide an int arg for the screen bus you want to instantiate Grove Line Finder");
+            console.log("Board not detected, please provide an int arg for the pin you want to instantiate Grove Line Finder");
             process.exit(1);
             }        
         console.log("Board not detected, instantiating Grove Line Finder on %d pin \n", iopin);

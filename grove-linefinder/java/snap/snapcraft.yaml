@@ -9,11 +9,12 @@ confinement: strict
 
 apps:
  run:
-   command: java -classpath $SNAP/jar/grove-linefinder-1.0.jar:$SNAP/usr/share/java/upm_grovelinefinder.jar GroveLineFinderSample
+   command: java -classpath $SNAP/jar/grove-linefinder-1.0.jar:$SNAP/usr/share/java/upm_grovelinefinder.jar:$SNAP/usr/share/java/mraa.jar GroveLineFinderSample
 
 parts:
   local:
     plugin: maven
     stage-packages:
        - libupm-java
+       - libmraa-java
        - mraa-imraa

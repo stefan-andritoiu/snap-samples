@@ -9,11 +9,12 @@ confinement: strict
 
 apps:
  run:
-   command: java -classpath $SNAP/jar/grove-speaker-1.0.jar:$SNAP/usr/share/java/upm_grovespeaker.jar GroveSpeakerSample
+   command: java -classpath $SNAP/jar/grove-speaker-1.0.jar:$SNAP/usr/share/java/upm_grovespeaker.jar:$SNAP/usr/share/java/mraa.jar GroveSpeakerSample
 
 parts:
   local:
     plugin: maven
     stage-packages:
        - libupm-java
+       - libmraa-java
        - mraa-imraa
