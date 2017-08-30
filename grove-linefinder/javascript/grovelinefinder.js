@@ -22,10 +22,54 @@
 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+var program = require('./usr/lib/nodejs/commander');
+program
+.version('1.0')
+.option('-p, --pin_number <n>', 'Insert pin number')
+.parse(process.argv);
+
+const mraa = require('./usr/lib/node_modules/mraa/mraa.node');
 var lineFinderSensor = require('./usr/lib/node_modules/jsupm_grovelinefinder/jsupm_grovelinefinder.node');
 
-// Instantiate a Grove line finder sensor on pin 20
-var myLineFinderSensor = new lineFinderSensor.GroveLineFinder(20);
+var iopin;
+switch (mraa.getPlatformType()) {
+      case mraa.INTEL_JOULE_EXPANSION:
+        iopin = 20;
+        console.log("Detected JOULE Board, instantiating Grove Line Finder on %d pin \n", iopin);
+        break;
+      case mraa.INTEL_DE3815 :       //DE3815 + Arduino 1to1
+        iopin = 14 + 512;
+        var res = mraa.addSubplatform(mraa.GENERIC_FIRMATA, "/dev/ttyACM0");
+        if (res != mraa.SUCCESS){
+        console.log("ERROR: Base platform DE3815 on port /dev/ttyACM0 for reason %d \n", res);
+            }
+        console.log("Detected DE3815 Board, instantiating Grove Line Finder on %d pin \n", iopin);
+        break;
+      case mraa.INTEL_MINNOWBOARD_MAX:
+        iopin = 21;
+        console.log("Detected MINNOWBOARD MAX Board, instantiating Grove Line Finder on %d pin \n", iopin);
+        break;
+      default:
+        if (program.pin_number)
+            if (parseInt(program.pin_number))
+                iopin = parseInt(program.pin_number);
+            else 
+                {
+                console.log("Error, inserted arguments is not of type int");
+                process.exit(1);
+                }
+        else
+            { 
+            console.log("Board not detected, please provide an int arg for the screen bus you want to instantiate Grove Line Finder");
+            process.exit(1);
+            }        
+        console.log("Board not detected, instantiating Grove Line Finder on %d pin \n", iopin);
+        break;
+    }
+
+
+// Instantiate a Grove line finder sensor on pin based on detected platform
+var myLineFinderSensor = new lineFinderSensor.GroveLineFinder(iopin);
 
 // Check every second for the presence of white detection
 setInterval(function()

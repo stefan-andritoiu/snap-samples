@@ -22,11 +22,54 @@
 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+var program = require('./usr/lib/nodejs/commander');
+program
+.version('1.0')
+.option('-p, --screen_bus <n>', 'Insert screen bus number')
+.parse(process.argv);
+
+const mraa = require('./usr/lib/node_modules/mraa/mraa.node');
 // Load lcd module on I2C
 var LCD = require('./usr/lib/node_modules/jsupm_jhd1313m1/jsupm_jhd1313m1.node');
 
+var screenBus;
+switch (mraa.getPlatformType()) {
+      case mraa.INTEL_JOULE_EXPANSION:
+        screenBus = 0;
+        console.log("Detected JOULE Board, instantiating jhd1313m1 on %d screen bus \n", screenBus);
+        break;
+      case mraa.INTEL_DE3815 :       //DE3815 + Arduino 1to1
+        screenBus = 512;
+        var res = mraa.addSubplatform(mraa.GENERIC_FIRMATA, "/dev/ttyACM0");
+        if (res != mraa.SUCCESS){
+        console.log("ERROR: Base platform DE3815 on port /dev/ttyACM0 for reason %d \n", res);
+            }
+        console.log("Detected DE3815 Board, instantiating jhd1313m1 on %d screen bus \n", screenBus);
+        break;
+      case mraa.INTEL_MINNOWBOARD_MAX:
+        screenBus = 0;
+        console.log("Detected MINNOWBOARD MAX Board, instantiating jhd1313m1 on %d screen bus \n", screenBus);
+        break;
+      default:
+        if (program.screen_bus)
+            if (parseInt(program.screen_bus))
+                screenBus = parseInt(program.screen_bus);
+            else 
+                {
+                console.log("Error, inserted arguments is not of type int");
+                process.exit(1);
+                }
+        else
+            { 
+            console.log("Board not detected, please provide an int arg for the screen bus you want to instantiate jhd1313m1");
+            process.exit(1);
+            }        
+        console.log("Board not detected, instantiating jhd1313m1 on %d screen bus \n", screenBus);
+        break;
+    }
+
 // Initialize Jhd1313m1 at 0x62 (RGB_ADDRESS) and 0x3E (LCD_ADDRESS) 
-var myLcd = new LCD.Jhd1313m1 (0, 0x3E, 0x62);
+var myLcd = new LCD.Jhd1313m1 (screenBus, 0x3E, 0x62);
 
 myLcd.setCursor(0,0);
 // RGB Blue
