@@ -22,12 +22,41 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 from __future__ import print_function
-import time, sys, signal, atexit
+import argparse
+import mraa
+import time
+import sys
+import signal
+import atexit
 from upm import pyupm_grovelinefinder as upmGrovelinefinder
 
+
 def main():
-    # Instantiate a Grove line finder sensor on pin 20
-    myLineFinder = upmGrovelinefinder.GroveLineFinder(20)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--pin_number", help="add user specific pin number for instantiating Grove Line Finder",
+                        type=int)
+    args = parser.parse_args()
+    platform_name = mraa.getPlatformName()
+    iopin = 0
+    if platform_name == "Intel DE3815":
+        iopin = 14 + 512
+        error_platform = mraa.addSubplatform(mraa.GENERIC_FIRMATA, "/dev/ttyACM0")
+        if error_platform != mraa.SUCCESS:
+            print ("ERROR: Base platform INTEL_DE3815 on port /dev/ttyACM0 for reason %s" % error_platform)
+        print ("Detected DE3815 Board, instantiating Grove Line Finder %s pin" % iopin)
+    elif platform_name == "INTEL JOULE EXPANSION":
+        iopin = 20
+        print ("Detected Joule Board, instantiating Grove Line Finder %s pin" % iopin)
+    elif platform_name == "MinnowBoard MAX":
+        iopin = 21
+        print ("Detected MinnowBoard MAX Board, instantiating Grove Line Finder %s pin" % iopin)
+    elif args.pin_number:
+        iopin = args.pin_number
+    else:
+        print ("Current board not detected, please provide an int arg for the pin you want to instantiate Grove Line Finder")
+        exit()
+    # Instantiate a Grove line finder sensor on pin based on platform type
+    myLineFinder = upmGrovelinefinder.GroveLineFinder(iopin)
 
     ## Exit handlers ##
     # This function stops python from printing a stacktrace when you hit control-C
@@ -49,6 +78,7 @@ def main():
         else:
             print("Black detected.")
         time.sleep(1)
+
 
 if __name__ == '__main__':
     main()

@@ -21,12 +21,38 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import time, sys, signal, atexit
+from __future__ import print_function
+import argparse
+import mraa
 from upm import pyupm_grovespeaker as upmGrovespeaker
 
+
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--pin_number", help="add user specific pin number for instantiating Grove Speaker",
+                        type=int)
+    args = parser.parse_args()
+    platform_name = mraa.getPlatformName()
+    iopin = 0
+    if platform_name == "Intel DE3815":
+        iopin = 14 + 512
+        error_platform = mraa.addSubplatform(mraa.GENERIC_FIRMATA, "/dev/ttyACM0")
+        if error_platform != mraa.SUCCESS:
+            print ("ERROR: Base platform INTEL_DE3815 on port /dev/ttyACM0 for reason %s" % error_platform)
+        print ("Detected DE3815 Board, instantiating Grove Speaker %s pin" % iopin)
+    elif platform_name == "INTEL JOULE EXPANSION":
+        iopin = 20
+        print ("Detected Joule Board, instantiating Grove Speaker %s pin" % iopin)
+    elif platform_name == "MinnowBoard MAX":
+        iopin = 21
+        print ("Detected MinnowBoard MAX Board, instantiating Grove Speaker %s pin" % iopin)
+    elif args.pin_number:
+        iopin = args.pin_number
+    else:
+        print ("Current board not detected, please provide an int arg for the pin you want to instantiate Grove Speaker")
+        exit()
     # Instantiate a Grove Speaker on digital pin 20 from Intel Joule
-    mySpeaker = upmGrovespeaker.GroveSpeaker(20)
+    mySpeaker = upmGrovespeaker.GroveSpeaker(iopin)
 
     # Play all 7 of the lowest notes
     mySpeaker.playAll()

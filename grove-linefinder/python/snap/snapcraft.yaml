@@ -16,6 +16,7 @@ parts:
     plugin: nil
     stage-packages: 
        - python-upm
+       - python-mraa
        - python
        - mraa-imraa
   movefiles:
