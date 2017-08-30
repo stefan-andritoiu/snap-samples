@@ -1,8 +1,8 @@
-name: grove-linefinder-cpp-joule-example
+name: grove-linefinder-cpp-example
 version: '1.0' 
 summary: Grove linefinder upm example for snapcraft
 description: |
-  Grove linefinder example from UPM lib for Intel Joule
+  Grove linefinder example from UPM lib
 
 grade: stable
 confinement: strict

@@ -50,7 +50,7 @@ public class GroveSpeakerSample {
                      System.out.println("Detected MINNOWBOARD MAX Board, instantiating Grove Speaker on " + iopin + " pin \n ");
                     }
         else if (argv.length == 0) {
-                     System.out.println("Current board not detected, please provide an int arg for the pin you want to flash\n");
+                     System.out.println("Current board not detected, please provide an int arg for the pin you want instantiate Grove Speaker \n");
                      System.exit(1);
                     } 
             else {   

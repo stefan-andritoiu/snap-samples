@@ -1,8 +1,8 @@
-name: jhd1313m1-upm-cpp-joule-example
+name: jhd1313m1-upm-cpp-example
 version: '1.0' 
 summary: Upm example for snapcraft
 description: |
-  jhd1313m1 Example from UPM lib for Intel Joule
+  jhd1313m1 Example from UPM lib
 
 grade: stable
 confinement: strict

@@ -1,8 +1,8 @@
-name: blink-mraa-cpp-joule-example
+name: blink-mraa-cpp-example
 version: '1.0' 
 summary: mraa for snapcraft
 description: |
-  Blink Example from MRAA lib for Intel Joule
+  Blink Example from MRAA lib
 
 grade: stable 
 confinement: strict 

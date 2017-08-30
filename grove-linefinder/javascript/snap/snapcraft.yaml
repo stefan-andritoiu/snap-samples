@@ -1,8 +1,8 @@
-name: grove-linefinder-javascript-joule-example
+name: grove-linefinder-javascript-example
 version: '1.0' 
-summary: Grove linefinder javascript upm example for Intel Joule
+summary: Grove linefinder javascript upm example
 description: |
-  Grove linefinder javascript example from UPM lib for Intel Joule
+  Grove linefinder javascript example from UPM lib
 
 grade: stable 
 confinement: strict

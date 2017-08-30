@@ -1,8 +1,8 @@
-name: grove-speaker-javascript-joule-example
+name: grove-speaker-javascript-example
 version: '1.0' 
-summary: Grove speaker javascript upm example for Intel Joule
+summary: Grove speaker javascript upm example
 description: |
-  Grove speaker javascript example from UPM lib for Intel Joule
+  Grove speaker javascript example from UPM lib
 
 grade: stable 
 confinement: strict

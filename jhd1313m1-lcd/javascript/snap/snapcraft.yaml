@@ -1,8 +1,8 @@
-name: jhd1313m1-lcd-upm-javascript-joule-example
+name: jhd1313m1-lcd-upm-javascript-example
 version: '1.0' 
-summary: Lcd javascript upm example for Intel Joule
+summary: Lcd javascript upm example
 description: |
-  Lcd javascript example from UPM lib for Intel Joule
+  Lcd javascript example from UPM lib
 
 grade: stable 
 confinement: strict

@@ -1,8 +1,8 @@
-name: grove-speaker-cpp-joule-example
+name: grove-speaker-cpp-example
 version: '1.0' 
 summary: Grove speaker upm example for snapcraft
 description: |
-  Grove speaker example from UPM lib for Intel Joule
+  Grove speaker example from UPM lib
 
 grade: stable
 confinement: strict
