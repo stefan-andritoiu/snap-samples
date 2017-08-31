@@ -1,8 +1,10 @@
 # grove-speaker  
 
-This example is intended to make use of the Grove Speaker sensor and Intel® Joule Expansion Board, in order to emit some custom musical notes.
+This example is intended to make use of the Grove Speaker sensor and  different hardware platforms, in order to emit some custom musical notes.
 
 # Basic Wiring
+
+As an example, we will use Intel® Joule Expansion Board as host platform for the Grove Speaker. In the following lines, it is described how the basic wiring should be made:
 
 1. Connect a jumper wire between;
 	* Pin 42 (pin 2 on the Joule's JI3)
@@ -33,13 +35,13 @@ $ sudo snap run snapcraft
 This will generate a *.snap file, the next step is to install this .snap on the Intel Joule Board, we will use the cpp project as an example:
   - using scp, copy the .snap file onto the board:
 ```sh
-$ scp grove-speaker-cpp-joule-example_1.0_amd64.snap <userName>@<ipAddress>:<JoulePath>
+$ scp grove-speaker-cpp-example_1.0_amd64.snap <userName>@<ipAddress>:<targetPath>
 ```
   - Connect through ssh to the board and navigate to the folder where the .snap file was copied and install it:
 ```sh
 $ ssh <userName>@<ipAddress>
-$ cd <JoulePath>
-$ snap install --devmode grove-speaker-cpp-joule-example_1.0_amd64.snap 
+$ cd <targetPath>
+$ snap install --devmode grove-speaker-cpp-example_1.0_amd64.snap 
 ```
 
 # Run Project
@@ -47,13 +49,13 @@ $ snap install --devmode grove-speaker-cpp-joule-example_1.0_amd64.snap
 After install, for cpp example, run:
 
 ```sh
-$ sudo snap run grove-speaker-cpp-joule-example_1.0_amd64.run
+$ sudo snap run grove-speaker-cpp-example_1.0_amd64.run
 ```
 
    
 # Warnings   
   
-   It was observed that, for mraa/upm to have access to GPIO's the binary/python/java should run with sudo.
+   It was observed that in order for mraa/upm to have access on Ubuntu to GPIO's the binary/python/java should run with sudo.
    
    
    For official documentation over snaps/snapcraft please follow this link:
@@ -63,4 +65,6 @@ $ sudo snap run grove-speaker-cpp-joule-example_1.0_amd64.run
 ### Tested
 |	Operating System	|	Carrier Board	|	mraa Version	|	upm Version	    |
 |:---------------------:|:-----------------:|:-----------------:|:-----------------:|
-|	Ubuntu Core			|  Intel Joule 570x	|	mraa 1.7.0		|	upm 1.3.0		|
+|	Ubuntu Core			|  Intel Joule 570x	|	mraa 1.7.0		|	upm 1.3.0		|   
+|	Ubuntu Desktop		|  MinnowBoard Max 	|	mraa 1.7.0		|	upm 1.3.0		|  
+|	Ubuntu Desktop		|  Intel Nuc DE3815 + Arduino 101	|	mraa 1.7.0		|	upm 1.3.0		| 
