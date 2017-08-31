@@ -1,4 +1,4 @@
-# snapcraft-samples
+# snap-samples
 
 Snapcraft samples using the Intel IoT Developer Kit, Intel Developer boards or Intel IoT Gateway, sensors, and APIs.
 
