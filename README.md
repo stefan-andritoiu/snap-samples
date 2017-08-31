@@ -21,7 +21,9 @@ $ snap install snapcraft --beta --classic
    [link]: <https://developer.ubuntu.com/core/get-started/intel-joule>
    [here]: <https://tutorials.ubuntu.com/tutorial/setup-ubuntu-core-intel-joule#0>
    
-Preffered OS:
+  - On the target Developer boards it is suggested to have installed Ubuntu Desktop or Ubuntu Core, in the future development of snapd, it will support other operating systems, but for now we suggest using Ubuntu.
+
+Preffered development host OS:
   - Ubuntu
   - Linux Mint
 
